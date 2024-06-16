@@ -16,6 +16,8 @@ set(APEXLDR_SRC
         include/structs.h
         src/apihashing.c
         src/apihammer.c
+        src/unhook.c
+        src/unhook.h
 )
 
 add_executable(ApexLdr ${APEXLDR_SRC})

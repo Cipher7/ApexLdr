@@ -62,6 +62,15 @@ typedef struct _RTL_USER_PROCESS_PARAMETERS {
 
 typedef PVOID PACTIVATION_CONTEXT;
 
+typedef struct _OBJECT_ATTRIBUTES {
+    ULONG Length;
+    PVOID RootDirectory;
+    PUNICODE_STRING ObjectName;
+    ULONG Attributes;
+    PVOID SecurityDescriptor;
+    PVOID SecurityQualityOfService;
+} OBJECT_ATTRIBUTES, * POBJECT_ATTRIBUTES;
+
 typedef struct _LDR_DATA_TABLE_ENTRY {
 	LIST_ENTRY InLoadOrderLinks;
 	LIST_ENTRY InMemoryOrderLinks;
