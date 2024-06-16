@@ -15,6 +15,7 @@ set(APEXLDR_SRC
         src/winapi.c
         include/structs.h
         src/apihashing.c
+        src/apihammer.c
 )
 
 add_executable(ApexLdr ${APEXLDR_SRC})
