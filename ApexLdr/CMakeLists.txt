@@ -7,7 +7,7 @@ set(CMAKE_C_COMPILER   x86_64-w64-mingw32-gcc)
 include_directories(include)
 
 set(APEXLDR_SRC
-        src/main.c
+        src/dllmain.c
 )
 
 add_executable(ApexLdr ${APEXLDR_SRC})

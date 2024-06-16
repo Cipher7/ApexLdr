@@ -152,7 +152,7 @@
 		{
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
-			"path" : "src/main.c",
+			"path" : "src/dllmain.c",
 			"sourceGroupIndex" : 0
 		}
 	],
