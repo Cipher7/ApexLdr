@@ -8,6 +8,13 @@ include_directories(include)
 
 set(APEXLDR_SRC
         src/dllmain.c
+        include/typedef.h
+        include/common.h
+        src/downloader.c
+        src/iatcamo.c
+        src/winapi.c
+        include/structs.h
+        src/apihashing.c
 )
 
 add_executable(ApexLdr ${APEXLDR_SRC})
