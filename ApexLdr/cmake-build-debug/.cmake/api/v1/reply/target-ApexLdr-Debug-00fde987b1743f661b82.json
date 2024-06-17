@@ -26,13 +26,13 @@
 			{
 				"command" : 0,
 				"file" : 0,
-				"line" : 23,
+				"line" : 30,
 				"parent" : 0
 			},
 			{
 				"command" : 1,
 				"file" : 0,
-				"line" : 24,
+				"line" : 31,
 				"parent" : 0
 			},
 			{
@@ -116,7 +116,9 @@
 				5,
 				7,
 				8,
-				9
+				9,
+				11,
+				13
 			]
 		}
 	],
@@ -155,7 +157,9 @@
 				5,
 				7,
 				8,
-				9
+				9,
+				11,
+				13
 			]
 		},
 		{
@@ -165,7 +169,9 @@
 				1,
 				2,
 				6,
-				10
+				10,
+				12,
+				14
 			]
 		}
 	],
@@ -230,7 +236,29 @@
 		},
 		{
 			"backtrace" : 1,
-			"path" : "src/unhook.h",
+			"path" : "include/unhook.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "src/syswhispers-unhook.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"path" : "include/syswhispers-unhook.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "src/inject.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"path" : "include/inject.h",
 			"sourceGroupIndex" : 1
 		}
 	],
