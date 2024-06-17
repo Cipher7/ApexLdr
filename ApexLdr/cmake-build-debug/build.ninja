@@ -98,8 +98,8 @@ build CMakeFiles/ApexLdr.dir/src/unhook.c.o: C_COMPILER__ApexLdr_unscanned_Debug
   OBJECT_DIR = CMakeFiles/ApexLdr.dir
   OBJECT_FILE_DIR = CMakeFiles/ApexLdr.dir/src
 
-build CMakeFiles/ApexLdr.dir/src/syswhispers-unhook.c.o: C_COMPILER__ApexLdr_unscanned_Debug /home/cipher/Desktop/ApexLdr/ApexLdr/src/syswhispers-unhook.c || cmake_object_order_depends_target_ApexLdr
-  DEP_FILE = CMakeFiles/ApexLdr.dir/src/syswhispers-unhook.c.o.d
+build CMakeFiles/ApexLdr.dir/src/syswhispers.c.o: C_COMPILER__ApexLdr_unscanned_Debug /home/cipher/Desktop/ApexLdr/ApexLdr/src/syswhispers.c || cmake_object_order_depends_target_ApexLdr
+  DEP_FILE = CMakeFiles/ApexLdr.dir/src/syswhispers.c.o.d
   FLAGS = -g -std=gnu11 -fdiagnostics-color=always -s -w -static -fpermissive -Wl,--subsystem,console -nostdlib -Wl,--entry=\"Main\" -lkernel32 -luser32 -masm=intel
   INCLUDES = -I/home/cipher/Desktop/ApexLdr/ApexLdr/include
   OBJECT_DIR = CMakeFiles/ApexLdr.dir
@@ -120,7 +120,7 @@ build CMakeFiles/ApexLdr.dir/src/inject.c.o: C_COMPILER__ApexLdr_unscanned_Debug
 #############################################
 # Link the executable ApexLdr
 
-build ApexLdr: C_EXECUTABLE_LINKER__ApexLdr_Debug CMakeFiles/ApexLdr.dir/src/dllmain.c.o CMakeFiles/ApexLdr.dir/src/downloader.c.o CMakeFiles/ApexLdr.dir/src/iatcamo.c.o CMakeFiles/ApexLdr.dir/src/winapi.c.o CMakeFiles/ApexLdr.dir/src/apihashing.c.o CMakeFiles/ApexLdr.dir/src/apihammer.c.o CMakeFiles/ApexLdr.dir/src/unhook.c.o CMakeFiles/ApexLdr.dir/src/syswhispers-unhook.c.o CMakeFiles/ApexLdr.dir/src/inject.c.o
+build ApexLdr: C_EXECUTABLE_LINKER__ApexLdr_Debug CMakeFiles/ApexLdr.dir/src/dllmain.c.o CMakeFiles/ApexLdr.dir/src/downloader.c.o CMakeFiles/ApexLdr.dir/src/iatcamo.c.o CMakeFiles/ApexLdr.dir/src/winapi.c.o CMakeFiles/ApexLdr.dir/src/apihashing.c.o CMakeFiles/ApexLdr.dir/src/apihammer.c.o CMakeFiles/ApexLdr.dir/src/unhook.c.o CMakeFiles/ApexLdr.dir/src/syswhispers.c.o CMakeFiles/ApexLdr.dir/src/inject.c.o
   FLAGS = -g
   OBJECT_DIR = CMakeFiles/ApexLdr.dir
   POST_BUILD = :

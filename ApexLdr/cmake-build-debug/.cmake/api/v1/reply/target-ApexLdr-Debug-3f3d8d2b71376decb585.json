@@ -242,12 +242,12 @@
 		{
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
-			"path" : "src/syswhispers-unhook.c",
+			"path" : "src/syswhispers.c",
 			"sourceGroupIndex" : 0
 		},
 		{
 			"backtrace" : 1,
-			"path" : "include/syswhispers-unhook.h",
+			"path" : "include/syswhispers.h",
 			"sourceGroupIndex" : 1
 		},
 		{

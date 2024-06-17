@@ -18,11 +18,11 @@ set(APEXLDR_SRC
         src/apihammer.c
         src/unhook.c
         include/unhook.h
-        src/syswhispers-unhook.c
-        include/syswhispers-unhook.h
-        src/syswhispers-unhook.c
-        include/syswhispers-unhook.h
-        include/syswhispers-unhook.h
+        src/syswhispers.c
+        include/syswhispers.h
+        src/syswhispers.c
+        include/syswhispers.h
+        include/syswhispers.h
         src/inject.c
         include/inject.h
 )

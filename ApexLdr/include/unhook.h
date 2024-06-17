@@ -3,7 +3,7 @@
 
 #include <windows.h>
 #include "structs.h"
-#include "syswhispers-unhook.h"
+#include "syswhispers.h"
 
 #define CRC_POLYNOMIAL  0xEDB88320
 #define text_CRC32  0xA21C1EA3
