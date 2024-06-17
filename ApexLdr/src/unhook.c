@@ -1,6 +1,5 @@
 #include "unhook.h"
 
-
 SIZE_T					g_sTextSectionSize              = (SIZE_T) NULL;
 LPVOID					g_pLocalTxtSectionAddress       = NULL;
 LPVOID					g_pKnownDllTxtSectionAddress    = NULL;

