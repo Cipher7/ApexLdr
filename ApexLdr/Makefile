@@ -6,6 +6,6 @@ SRC := src
 CFLAGS := -s -w -static -fpermissive -Wl,--subsystem,console -Iinclude -lkernel32 -luser32
 
 all:
-	@ $(CCX64) -o $(DIST)/$(NAME).exe $(SRC)/*.c $(CFLAGS) -masm=intel
+	@ $(CCX64) -o $(DIST)/$(NAME).dll $(SRC)/*.c $(CFLAGS) -masm=intel -shared
 clean:
 	@ rm -rf $(DIST)/*

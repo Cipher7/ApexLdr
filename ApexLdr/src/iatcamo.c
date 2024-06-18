@@ -39,15 +39,15 @@ VOID IatCamouflage() {
 	if (*A > 350) {
 
 		// some random whitelisted WinAPIs
-		unsigned __int64 i = MessageBoxA(NULL, NULL, NULL, NULL);
+		unsigned __int64 i = MessageBoxA(NULL, NULL, NULL, (UINT) NULL);
 		i = GetLastError();
-		i = SetCriticalSectionSpinCount(NULL, NULL);
+		i = SetCriticalSectionSpinCount(NULL, (DWORD) NULL);
 		i = GetWindowContextHelpId(NULL);
-		i = GetWindowLongPtrW(NULL, NULL);
+		i = GetWindowLongPtrW(NULL, (int) NULL);
 		i = RegisterClassW(NULL);
 		i = IsWindowVisible(NULL);
-		i = ConvertDefaultLocale(NULL);
-		i = MultiByteToWideChar(NULL, NULL, NULL, NULL, NULL, NULL);
+		i = ConvertDefaultLocale((LCID) NULL);
+		i = MultiByteToWideChar((UINT) NULL, (DWORD) NULL, NULL, (int) NULL, NULL, (int) NULL);
 		i = IsDialogMessageW(NULL, NULL);
 	}
 

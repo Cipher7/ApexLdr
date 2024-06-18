@@ -81,7 +81,7 @@ DWORD Download(char** response, PVOID url, PVOID endpoint, BOOL ssl)
 
 	BOOL status = g_Api.pHttpSendRequestA(hRequest,NULL,0,NULL,0);
 
-	DWORD dwBytesRead = NULL;
+	DWORD dwBytesRead = (DWORD) NULL;
 	SIZE_T sSize = 0;
 
 	*response = (char*)malloc(1);
@@ -90,7 +90,7 @@ DWORD Download(char** response, PVOID url, PVOID endpoint, BOOL ssl)
 			if (bytesRead > 0) {
 				char* temp = (char*)realloc(*response, totalBytesRead + bytesRead + 1);
 				if (temp == NULL) {
-					return NULL;
+					return (DWORD) NULL;
 				}
 				else {
 					*response = temp;

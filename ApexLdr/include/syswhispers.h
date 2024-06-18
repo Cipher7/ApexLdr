@@ -7,6 +7,7 @@
 #define SW3_HEADER_H_
 
 #include <windows.h>
+#include "structs.h"
 
 #ifndef _NTDEF_
 typedef _Return_type_success_(return >= 0) LONG NTSTATUS;
@@ -61,12 +62,6 @@ BOOL SW3_PopulateSyscallList();
 EXTERN_C DWORD SW3_GetSyscallNumber(DWORD FunctionHash);
 EXTERN_C PVOID SW3_GetSyscallAddress(DWORD FunctionHash);
 EXTERN_C PVOID internal_cleancall_wow64_gate(VOID);
-typedef struct _UNICODE_STRING
-{
-	USHORT Length;
-	USHORT MaximumLength;
-	PWSTR  Buffer;
-} UNICODE_STRING, *PUNICODE_STRING;
 
 typedef struct _SYSTEM_HANDLE
 {
@@ -600,8 +595,6 @@ typedef struct _ALPC_SECURITY_ATTR
 	ULONG                        Reserved1;
 	ULONG                        Reserved2;
 } ALPC_SECURITY_ATTR, *PALPC_SECURITY_ATTR;
-
-typedef PVOID* PPVOID;
 
 typedef enum _KPROFILE_SOURCE
 {
@@ -1149,16 +1142,6 @@ typedef enum _KEY_INFORMATION_CLASS
 	KeyHandleTagsInformation = 7,
 	MaxKeyInfoClass = 8
 } KEY_INFORMATION_CLASS, *PKEY_INFORMATION_CLASS;
-
-typedef struct _OBJECT_ATTRIBUTES
-{
-	ULONG           Length;
-	HANDLE          RootDirectory;
-	PUNICODE_STRING ObjectName;
-	ULONG           Attributes;
-	PVOID           SecurityDescriptor;
-	PVOID           SecurityQualityOfService;
-} OBJECT_ATTRIBUTES, *POBJECT_ATTRIBUTES;
 
 typedef enum _TIMER_INFORMATION_CLASS
 {
