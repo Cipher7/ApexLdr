@@ -5,8 +5,8 @@
 
 //global variables
 extern unsigned char* pPayload;
-extern PSTR url;
-extern PSTR endpoint;
+extern PWSTR url;
+extern PWSTR endpoint;
 extern SIZE_T sSize;
 
 

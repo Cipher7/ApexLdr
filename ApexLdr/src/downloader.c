@@ -13,7 +13,7 @@
 #define WinHttpCloseHandle_JOAA         0x49189A17
 #define GetTickCount64_JOAA     0x00BB616E
 #define LoadLibraryA_JOAA       0x54C1D227
-#define KERNEL32DLL_JOAA        0x20666D0D
+#define KERNEL32DLL_JOAA        0xFD2AD9BD
 #define WINHTTPDLL_JOAA         0x25AE5124
 
 API_HASHING g_Api = { 0 };
