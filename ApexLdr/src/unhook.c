@@ -4,23 +4,6 @@ SIZE_T					g_sTextSectionSize              = (SIZE_T) NULL;
 LPVOID					g_pLocalTxtSectionAddress       = NULL;
 LPVOID					g_pKnownDllTxtSectionAddress    = NULL;
 
-UINT32 CRC32B(LPCSTR cString)
-{
-    UINT32      uMask   = 0x00, uHash   = 0xFFFFFFFF;
-    INT         i       = 0x00;
-    while (cString[i] != 0)
-    {
-        uHash = uHash ^ (UINT32)cString[i];
-        for (int ii = 0; ii < 8; ii++)
-        {
-            uMask = -1 * (uHash & 1);
-            uHash = (uHash >> 1) ^ (CRC_POLYNOMIAL & uMask);
-        }
-        i++;
-    }
-    return ~uHash;
-}
-
 LPVOID MapDllFromKnownDllDir(IN PWSTR szDllName)
 {
     PVOID                  pModule                 = NULL;
@@ -94,7 +77,6 @@ VOID UnhookAllLoadedDlls()
                 }
             }
 
-            // Check if all variables are retrieved
             if (!sTextSectionSize || !pLocalTxtSectionAddress || !pKnownDllTxtSectionAddress)
                 goto _CLEANUP;
 
@@ -109,7 +91,6 @@ VOID UnhookAllLoadedDlls()
             {
                 goto _CLEANUP;
             }
-
         }
 
         _CLEANUP:

