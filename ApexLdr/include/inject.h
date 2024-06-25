@@ -11,7 +11,7 @@
 #define PAYLOAD_EXEC_DELAY      0x0A
 
 BOOL Inject(PBYTE pPayloadBuffer, SIZE_T sPayloadSize, PBYTE* pInjectedPayload);
-VOID Execute(IN PVOID pInjectedPayload);
+VOID Execute(PVOID pInjectedPayload);
 
 
 #endif //APEXLDR_INJECT_H

