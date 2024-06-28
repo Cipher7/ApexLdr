@@ -16,7 +16,7 @@ typedef PTP_TIMER (WINAPI* fnCreateThreadpoolTimer)(IN PTP_TIMER_CALLBACK pfnti,
 typedef void (WINAPI* fnSetThreadpoolTimer)(IN OUT PTP_TIMER pti, IN OPTIONAL PFILETIME pftDueTime, IN DWORD msPeriod, IN DWORD msWindowLength);
 typedef DWORD (WINAPI* fnWaitForSingleObject)(IN HANDLE hHandle, IN DWORD dwMilliseconds);
 
-BOOL Inject(PBYTE pPayloadBuffer, SIZE_T sPayloadSize, PBYTE* pInjectedPayload);
+BOOL Inject(PBYTE* pInjectedPayload);
 VOID Execute(PVOID pInjectedPayload);
 
 
