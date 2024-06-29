@@ -109,7 +109,7 @@ PVOID SC_Address(PVOID NtApiAddress)
     // NtApiAddress and the 'syscall; ret' instructions
     SyscallAddress = SW3_RVA2VA(PVOID, NtApiAddress, distance_to_syscall);
 
-    if (!memcmp((PVOID)syscall_code, SyscallAddress, sizeof(syscall_code)))
+    if (!apis.msvcrt.memcmp((PVOID)syscall_code, SyscallAddress, sizeof(syscall_code)))
     {
         // we can use the original code for this system call :)
         #if defined(DEBUG)
@@ -128,7 +128,7 @@ PVOID SC_Address(PVOID NtApiAddress)
             PVOID,
             NtApiAddress,
             distance_to_syscall + num_jumps * 0x20);
-        if (!memcmp((PVOID)syscall_code, SyscallAddress, sizeof(syscall_code)))
+        if (!apis.msvcrt.memcmp((PVOID)syscall_code, SyscallAddress, sizeof(syscall_code)))
         {
         #if defined(DEBUG)
             printf("Found Syscall Opcodes at address 0x%p\n", SyscallAddress);
@@ -141,7 +141,7 @@ PVOID SC_Address(PVOID NtApiAddress)
             PVOID,
             NtApiAddress,
             distance_to_syscall - num_jumps * 0x20);
-        if (!memcmp((PVOID)syscall_code, SyscallAddress, sizeof(syscall_code)))
+        if (!apis.msvcrt.memcmp((PVOID)syscall_code, SyscallAddress, sizeof(syscall_code)))
         {
         #if defined(DEBUG)
             printf("Found Syscall Opcodes at address 0x%p\n", SyscallAddress);
@@ -288,11 +288,11 @@ EXTERN_C PVOID SW3_GetRandomSyscallAddress(DWORD FunctionHash)
     // Ensure SW3_SyscallList is populated.
     if (!SW3_PopulateSyscallList()) return NULL;
 
-    DWORD index = ((DWORD) rand()) % SW3_SyscallList.Count;
+    DWORD index = ((DWORD) apis.msvcrt.rand()) % SW3_SyscallList.Count;
 
     while (FunctionHash == SW3_SyscallList.Entries[index].Hash){
         // Spoofing the syscall return address
-        index = ((DWORD) rand()) % SW3_SyscallList.Count;
+        index = ((DWORD) apis.msvcrt.rand()) % SW3_SyscallList.Count;
     }
     return SW3_SyscallList.Entries[index].SyscallAddress;
 }

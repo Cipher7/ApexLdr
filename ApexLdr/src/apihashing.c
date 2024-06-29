@@ -41,9 +41,9 @@ FARPROC GetProcAddressH(HMODULE hModule, UINT32 uApiHash)
                 PCHAR	pcFunctionMod			     = NULL;
                 PCHAR	pcFunctionName			     = NULL;
 
-                memcpy(cForwarderName, pFunctionAddress, strlen((PCHAR)pFunctionAddress));
+                apis.msvcrt.memcpy(cForwarderName, pFunctionAddress, apis.msvcrt.strlen((PCHAR)pFunctionAddress));
 
-                for (int i = 0; i < strlen((PCHAR)cForwarderName); i++)
+                for (int i = 0; i < apis.msvcrt.strlen((PCHAR)cForwarderName); i++)
                 {
                     if (((PCHAR)cForwarderName)[i] == '.')
                     {

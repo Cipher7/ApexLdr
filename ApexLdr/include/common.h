@@ -2,6 +2,7 @@
 #include <windows.h>
 #include <stdio.h>
 #include "typedef.h"
+#include "structs.h"
 
 //global variables
 extern unsigned char* pPayload;

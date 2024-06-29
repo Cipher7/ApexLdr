@@ -22,6 +22,20 @@ UINT32 CRC32B(LPCSTR cString);
 #define AddVectoredExceptionHandler_CRC32        0x91765761
 #define RemoveVectoredExceptionHandler_CRC32     0x8670F6CA
 
+#define HASH_memset     0x00
+#define HASH__time64     0x00
+#define HASH_printf     0x00
+#define HASH_rand       0x00
+#define HASH_sprintf    0x00
+#define HASH_srand      0x00
+#define HASH_memcpy     0x00
+#define HASH_memcmp     0x00
+#define HASH_strlen     0x00
+#define HASH_realloc    0x00
+#define HASH_malloc     0x00
+#define HASH_wcscat     0x00
+#define HASH_wcslen     0x00
+
 #define text_CRC32       0xA21C1EA3
 
 #define kernel32_CRC32   0x6AE69F02
@@ -30,4 +44,5 @@ UINT32 CRC32B(LPCSTR cString);
 
 #define ntdll_CRC32      0x84C05E40
 
+#define msvcrtdll_CRC32  0x0
 #endif //APEXLDR_HASHER_H

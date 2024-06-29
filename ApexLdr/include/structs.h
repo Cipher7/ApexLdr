@@ -1,6 +1,7 @@
 #pragma once
 
 #include <windows.h>
+#include <time.h>
 
 typedef struct _UNICODE_STRING {
 	USHORT Length;
@@ -158,3 +159,44 @@ typedef struct _PEB {
 	ULONG                   SessionId;
 } PEB, * PPEB;
 
+// MSVCRT
+
+#define WIN32_FUNC( x )     __typeof__( x ) * x;
+
+typedef __time64_t  (WINAPI * _TIME64)   (__time64_t *_Time);
+typedef void        (WINAPI * _SRAND)   (unsigned int seed);
+typedef int         (WINAPI * _RAND)    (void);
+typedef void*       (WINAPI * _MEMSET)  (void* str, int ch, size_t n);
+typedef int         (WINAPI * _PRINTF)  (const char *format, ...);
+typedef int         (WINAPI * _SPRINTF) (char *str, const char *format, ...);
+typedef void*       (WINAPI * _MEMCPY)  (void *dest, const void * src, size_t n);
+typedef int         (WINAPI * _MEMCMP)  (const void *str1, const void *str2, size_t n);
+typedef size_t      (WINAPI * _STRLEN)  (const char *_Str);
+typedef void*       (WINAPI * _REALLOC) (void *_Memory,size_t _NewSize);
+typedef void*       (WINAPI * _MALLOC)  (size_t _Size);
+typedef wchar_t*    (WINAPI * _WCSCAT)  (wchar_t * __restrict__ _Dest,const wchar_t * __restrict__ _Source);
+typedef size_t      (WINAPI * _WCSLEN)  (const wchar_t *_Str);
+
+typedef struct APIS {
+    struct msvcrt {
+        WIN32_FUNC(_time64)
+        WIN32_FUNC(srand)
+        WIN32_FUNC(rand)
+        WIN32_FUNC(memset)
+        WIN32_FUNC(memcpy)
+        WIN32_FUNC(memcmp)
+        WIN32_FUNC(strlen)
+        WIN32_FUNC(realloc)
+        WIN32_FUNC(malloc)
+        WIN32_FUNC(wcscat)
+        WIN32_FUNC(wcslen)
+        _PRINTF printf;
+        _SPRINTF sprintf;
+    }msvcrt;
+
+    struct handles {
+        HANDLE mscvtdll;
+    }handles;
+} APIS, *pAPIS;
+
+extern APIS apis;

