@@ -15,26 +15,25 @@ UINT32 CRC32B(LPCSTR cString);
 #define WinHttpReadData_CRC32    0x2E5251CA
 #define WinHttpCloseHandle_CRC32         0x6A29F9F4
 #define GetTickCount64_CRC32     0x517FEF08
+#define memset_CRC32     0x8463960A
+#define _time64_CRC32    0x63985F1E
+#define printf_CRC32     0xD21739F1
+#define rand_CRC32       0x18C6F574
+#define sprintf_CRC32    0x23398D9A
+#define srand_CRC32      0x41D2476A
+#define memcpy_CRC32     0xD141AFD3
+#define memcmp_CRC32     0x57F17B6B
+#define strlen_CRC32     0x025D112D
+#define realloc_CRC32    0x1C13E31D
+#define malloc_CRC32     0xA719DEAF
+#define wcscat_CRC32     0x61E2048F
+#define wcslen_CRC32     0xF3B07FCC
 #define LoadLibraryA_CRC32       0x3FC1BD8D
 #define CreateThreadpoolTimer_CRC32      0xCC315CB0
 #define SetThreadpoolTimer_CRC32         0x9B52D1CC
 #define WaitForSingleObject_CRC32        0xE058BB45
 #define AddVectoredExceptionHandler_CRC32        0x91765761
 #define RemoveVectoredExceptionHandler_CRC32     0x8670F6CA
-
-#define HASH_memset     0x00
-#define HASH__time64     0x00
-#define HASH_printf     0x00
-#define HASH_rand       0x00
-#define HASH_sprintf    0x00
-#define HASH_srand      0x00
-#define HASH_memcpy     0x00
-#define HASH_memcmp     0x00
-#define HASH_strlen     0x00
-#define HASH_realloc    0x00
-#define HASH_malloc     0x00
-#define HASH_wcscat     0x00
-#define HASH_wcslen     0x00
 
 #define text_CRC32       0xA21C1EA3
 
@@ -44,5 +43,5 @@ UINT32 CRC32B(LPCSTR cString);
 
 #define ntdll_CRC32      0x84C05E40
 
-#define msvcrtdll_CRC32  0x0
+#define msvcrt_CRC32     0x161B8E25
 #endif //APEXLDR_HASHER_H

