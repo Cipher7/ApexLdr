@@ -40,3 +40,5 @@ A simple DLL payload loader written in C incorporating the features I have learn
 > **EDR Evasion? :** This is my first DLL Payload Loader, it can bypass many AV solutions and EDRs but some of the techniques it incorporates aren't the best, so as I keep learning I'll make better loaders!
 >
 > **Signature:** Use tools like Sigthief to sign the DLL payload before usage. It may help evade some AVs which focus mainly on signatures.
+>
+> **Recommendation:** You can modify this loader easily to sideload other applications. Just modify the dllmain.c file and change Py_Main function to the export function of your application. Make sure to proxy all the other export functions to prevent errors and crashes.
