@@ -22,9 +22,16 @@ A simple DLL payload loader written in C incorporating the features I have learn
 - Run `pythonw.exe`
 - It should DLL sideload `python310.dll` and run the shellcode
 
+![usage](./images/usage.png)
+
 
 ## Testing with Havoc and Windows Defender
 
+![windows-defender](./images/victim.png)
+
+![havoc-shell](./images/havoc-kali.png)
+
+---
 
 
 ## Note
