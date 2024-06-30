@@ -1,5 +1,7 @@
 # ApexLdr
 
+A simple DLL payload loader written in C incorporating the features I have learnt in Malware Development till now.
+
 ## Features
 
 - DLL sideloading
@@ -9,11 +11,21 @@
 - Payload execution via Threadpool API
 - DLL unhooking
 - Import Address Table Camoflage
+- Execution delays via API Hammering
 - API Hashing
 
 ## Usage
+- Clone the Repository
+- Run `make` to compile the dll
+- `python310.dll` should be generated in the the `dist\` folder
+- Copy the `pythonw.exe` and `python310.dll` to the victim machine
+- Run `pythonw.exe`
+- It should DLL sideload `python310.dll` and run the shellcode
+
 
 ## Testing with Havoc and Windows Defender
+
+
 
 ## Note
 > **Shellcode Encryption :** The shellcode is being fetched from a remote server, providing SSL Support. I haven't incorporated any shellcode encryption and decryption procedures to keep the loader simple and maintain a low entropy.
