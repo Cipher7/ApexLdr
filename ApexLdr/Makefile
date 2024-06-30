@@ -1,4 +1,4 @@
-NAME := ApexLdr
+NAME := python310
 CCX64 := x86_64-w64-mingw32-gcc
 PY := python3
 DIST := dist

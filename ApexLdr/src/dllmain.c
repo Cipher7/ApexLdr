@@ -7,7 +7,7 @@ PWSTR endpoint = L"/shell.bin";
 SIZE_T sSize = (SIZE_T) NULL;
 APIS apis = { 0 };
 
-extern __declspec(dllexport) int Apex() {
+extern __declspec(dllexport) int Py_Main() {
     while (TRUE) {}
 }
 
