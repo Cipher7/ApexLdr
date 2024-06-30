@@ -93,6 +93,9 @@
 		<Unit filename="/home/cipher/Desktop/ApexLdr/ApexLdr/include/inject.h">
 			<Option target="ApexLdr"/>
 		</Unit>
+		<Unit filename="/home/cipher/Desktop/ApexLdr/ApexLdr/include/obfus.h">
+			<Option target="ApexLdr"/>
+		</Unit>
 		<Unit filename="/home/cipher/Desktop/ApexLdr/ApexLdr/include/structs.h">
 			<Option target="ApexLdr"/>
 		</Unit>

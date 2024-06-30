@@ -26,13 +26,13 @@
 			{
 				"command" : 0,
 				"file" : 0,
-				"line" : 31,
+				"line" : 32,
 				"parent" : 0
 			},
 			{
 				"command" : 1,
 				"file" : 0,
-				"line" : 32,
+				"line" : 33,
 				"parent" : 0
 			},
 			{
@@ -172,7 +172,8 @@
 				9,
 				11,
 				13,
-				15
+				15,
+				16
 			]
 		}
 	],
@@ -265,6 +266,11 @@
 		{
 			"backtrace" : 1,
 			"path" : "include/hasher.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"path" : "include/obfus.h",
 			"sourceGroupIndex" : 1
 		}
 	],

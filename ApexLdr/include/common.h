@@ -4,6 +4,7 @@
 #include "typedef.h"
 #include "structs.h"
 
+
 //global variables
 extern unsigned char* pPayload;
 extern PWSTR url;
