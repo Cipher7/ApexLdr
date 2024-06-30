@@ -38,3 +38,5 @@ A simple DLL payload loader written in C incorporating the features I have learn
 > **Shellcode Encryption:** The shellcode is being fetched from a remote server, providing SSL Support. I haven't incorporated any shellcode encryption and decryption procedures to keep the loader simple and maintain a low entropy.
 >
 > **EDR Evasion? :** This is my first DLL Payload Loader, it can bypass many AV solutions and EDRs but some of the techniques it incorporates aren't the best, so as I keep learning I'll make better loaders!
+>
+> **Signature:** Use tools like Sigthief to sign the DLL payload before usage. It may help evade some AVs which focus mainly on signatures.
