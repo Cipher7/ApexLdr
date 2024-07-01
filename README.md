@@ -18,6 +18,7 @@ A simple DLL payload loader written in C incorporating the features I have learn
 - Clone the Repository
 - Run `make` to compile the DLL
 - `python310.dll` should be generated in the `dist\` folder
+- Copy `pythonw.exe` from `DLL-sideload-app` to `dist\` folder
 - Copy the `pythonw.exe` and `python310.dll` to the victim machine
 - Run `pythonw.exe`
 - It should DLL sideload `python310.dll` and run the shellcode
